@@ -11,6 +11,11 @@ class Node{
         data=data1;
         next=nullptr;
     }
+    public:
+    Node(int data2,Node* temp){
+        data=data2;
+        next=temp;
+    }
 };
 
 Node* ConvertArrToLL(vector<int> arr){
@@ -79,10 +84,52 @@ Node* deleteK(Node* head,int k){
     return head;
 }
 
+Node* deleteValue(Node* head,int val){
+    if(head==NULL) return head;
+
+    if(head->data==val){
+        Node* temp=head;
+        head=head->next;
+        delete temp;
+        return head;
+    }
+    Node* temp=head;
+    Node* prev=NULL;
+    while(temp!=NULL){
+        if(temp->data==val){
+            prev->next=prev->next->next;
+            delete temp;
+            break;
+        }
+        prev=temp;
+        temp=temp->next;
+    }
+    return head;
+}
+
+Node* insertHead(Node* head,int val){
+    Node* temp=new Node(val,head); // return new Node(val,head);
+    return temp;
+}
+
+Node* insertTail(Node* head,int val){
+    if(head==NULL){
+        return new Node(val);
+    }
+    Node* temp=head;
+    while(temp->next!=NULL){
+        temp=temp->next;
+    }
+    temp->next=new Node(val);
+    return head;
+}
+
 int main(){
     vector<int> arr={1,2,3,4,5};
     Node* head=ConvertArrToLL(arr);
     // head=deleteHead(head);
-    deleteK(head,3);
+    // deleteValue(head,5);
+    head=insertHead(head,10);
+    insertTail(head,12);
     printLL(head);
 }
