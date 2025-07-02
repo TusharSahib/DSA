@@ -124,6 +124,49 @@ Node* insertTail(Node* head,int val){
     return head;
 }
 
+Node* insertK(Node* head,int k,int val){
+    if(head==NULL){
+        if(k==1) return new Node(val);
+        else return NULL;
+    }
+    if(k==1){
+        return new Node(val,head);
+    }
+    int cnt=0;
+    Node* temp=head;
+    while(temp!=NULL){
+        cnt++;
+        if(cnt==k-1){
+            Node* x=new Node(val);
+            x->next=temp->next;
+            temp->next=x;
+            break;
+        }
+        temp=temp->next;
+    }
+    return head;
+}
+
+Node* insertVal(Node* head,int k,int val){
+    if(head==NULL){
+        return NULL;
+    }
+    if(head->data==k){
+        return new Node(val,head);
+    }
+    Node* temp=head;
+    while(temp!=NULL){
+        if(temp->next->data==k){
+            Node* x=new Node(val);
+            x->next=temp->next;
+            temp->next=x;
+            break;
+        }
+        temp=temp->next;
+    }
+    return head;
+}
+
 int main(){
     vector<int> arr={1,2,3,4,5};
     Node* head=ConvertArrToLL(arr);
@@ -131,5 +174,7 @@ int main(){
     // deleteValue(head,5);
     head=insertHead(head,10);
     insertTail(head,12);
+    insertK(head,3,13);
+    insertVal(head,4,14);
     printLL(head);
 }
