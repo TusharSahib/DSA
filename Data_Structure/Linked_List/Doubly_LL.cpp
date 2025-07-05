@@ -1,4 +1,4 @@
-#include<iostream>
+#include<bits/stdc++.h>
 using namespace std;
 
 class Node{
@@ -41,9 +41,43 @@ void print(Node* head){
     }
     
 }
+Node* removeHead(Node* head){
+    if(head==NULL || head->next==NULL){
+        return NULL;
+    }
+
+    Node* prev=head;
+    head=head->next;
+
+    head->back=nullptr;
+    prev->next=nullptr;
+
+    delete prev;
+    return head;
+}
+
+Node* removeTail(Node* head){
+    if(head==NULL || head->next==NULL){
+        return NULL;
+    }
+
+    Node* prev=head;
+    while(prev!=NULL){
+        if(prev->next->next==NULL){
+            Node* temp=prev->next;
+            temp->back==nullptr;
+            prev->next=nullptr;
+            delete temp;
+        }
+
+        prev=prev->next;
+    }
+    return head;
+}
 
 int main(){
-    vector<int> arr={1,2,3,4,5};
+    vector<int> arr={1,2,3,4,5,6,7};
     Node* head=ConvertArrToDLL(arr);
+    head=removeTail(head);
     print(head);
 }
