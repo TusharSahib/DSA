@@ -98,7 +98,7 @@ Node *removeK(Node *head, int k)
     }
 
     if (temp == NULL)
-        return head; // k is out of bounds
+        return head; 
 
     if (temp->back == NULL)
         return removeHead(head);
