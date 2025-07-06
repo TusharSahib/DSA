@@ -69,72 +69,59 @@ Node *removeTail(Node *head)
 {
     if (head == NULL || head->next == NULL)
     {
+        delete head;
         return NULL;
     }
 
-    Node *prev = head;
-    while (prev != NULL)
-    {
-        if (prev->next->next == NULL)
-        {
-            Node *temp = prev->next;
-            temp->back == nullptr;
-            prev->next = nullptr;
-            delete temp;
-        }
+    Node *temp = head;
+    while (temp->next->next != NULL)
+        temp = temp->next;
 
-        prev = prev->next;
-    }
+    Node *last = temp->next;
+    temp->next = NULL;
+    delete last;
     return head;
 }
+
 
 Node *removeK(Node *head, int k)
 {
     if (head == NULL)
-    {
         return NULL;
-    }
+
     Node *temp = head;
-    int count = 0;
-    while (temp != NULL)
+    int count = 1;
+    while (temp != NULL && count < k)
     {
-        count++;
-        if (count == k)
-            break;
         temp = temp->next;
+        count++;
     }
-    Node *prev = temp->back;
-    Node *front = temp->next;
 
-    if (prev == NULL || front == NULL)
-    {
-        delete temp;
-        return NULL;
-    }
-    else if (prev == NULL)
-    {
+    if (temp == NULL)
+        return head; // k is out of bounds
+
+    if (temp->back == NULL)
         return removeHead(head);
-    }
-    else if (front == NULL)
-    {
+    else if (temp->next == NULL)
         return removeTail(head);
+    else
+    {
+        Node *prev = temp->back;
+        Node *front = temp->next;
+
+        prev->next = front;
+        front->back = prev;
+
+        delete temp;
+        return head;
     }
-
-    prev->next = front;
-    front->back = prev;
-
-    temp->back = NULL;
-    temp->next = NULL;
-
-    delete temp;
-    return head;
 }
+
 
 int main()
 {
     vector<int> arr = {1, 2, 3, 4, 5, 6, 7};
     Node *head = ConvertArrToDLL(arr);
-    print(head);
-    head = removeK(head, 1);
+    head = removeK(head, 5);
     print(head);
 }
