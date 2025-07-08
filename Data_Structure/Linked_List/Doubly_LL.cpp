@@ -122,6 +122,7 @@ int main()
 {
     vector<int> arr = {1, 2, 3, 4, 5, 6, 7};
     Node *head = ConvertArrToDLL(arr);
+    head = removeTail(head);
     head = removeK(head, 5);
     print(head);
 }
